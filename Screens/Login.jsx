@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import LoginPage from './LoginPage';
 import RegusterPage from './RegusterPage';
 
-const Login = () => {
+const Login = (props) => {
     const [LoginState, setLoginState] = useState(false)
     const [registerState, setRegisterState] = useState(false)
 
@@ -23,7 +23,7 @@ const Login = () => {
     }
   return (
     <View style={styles.container}>
-        { LoginState && <LoginPage onClose={fecharLoginState} modalVisible={LoginState}/>}
+        { LoginState && <LoginPage onClose={props.onClick} modalVisible={LoginState}/>}
         { registerState && <RegusterPage onClose={fecharRegisterState} modalVisible={registerState}/>}
         
       <View style={styles.backgroundLogin}>
@@ -164,3 +164,7 @@ const styles = StyleSheet.create({
   });
 
 export default Login
+
+
+
+

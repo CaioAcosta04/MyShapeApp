@@ -1,7 +1,43 @@
-import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native'
 import React, { useState } from 'react'
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCEPMu8bMCitqcXWMeLVUJ5cPf_SvtZJM0",
+    authDomain: "myshapeapp-f9c29.firebaseapp.com",
+    projectId: "myshapeapp-f9c29",
+    storageBucket: "myshapeapp-f9c29.appspot.com",
+    messagingSenderId: "658949936573",
+    appId: "1:658949936573:web:4b26860accb5e1bb9deed4",
+    measurementId: "G-RZK7HGC7BE"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
 
 const LoginPage = (props) => {
+    const [emailState, setEmailState] = useState('');
+    const [senhaState, setSenhaState] = useState('');
+
+    function createUser(){
+
+        //Implementar logica de email e senha
+
+        createUserWithEmailAndPassword(auth, emailState, senhaState)
+          .then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            console.log("Conta criada com sucesso!")
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
+      }
 
   return (
 
@@ -18,16 +54,18 @@ const LoginPage = (props) => {
                 <TextInput
                     placeholder='Email'
                     style={styles.textInput}
+                    onChange={newText => setEmailState(newText)}
                 />
                 <TextInput
                     placeholder='Senha'
                     style={styles.textInput}
+                    onChange={newText => setSenhaState(newText)}
                 />
             </View>
 
             <View style={styles.btnView}>
                 <TouchableOpacity 
-                    onPress={props.onClose}
+                    onPress={createUser}
                     style={styles.btnLogin}
                     >
                     <Text style={styles.btnTxt}>Login</Text>
@@ -37,6 +75,32 @@ const LoginPage = (props) => {
                     style={styles.back}
                     >
                     <Text style={styles.btnTxt}>Voltar</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.loginItensView}>
+                <TouchableOpacity>
+                <Image 
+                    styles={styles.loginItem1}
+                    source={require('../assets/apple.png')} 
+                    resizeMode='contain'
+                />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Image 
+                    styles={styles.loginItem2}
+                    source={require('../assets/google.png')}
+                    resizeMode='contain'
+                    />
+                </TouchableOpacity>
+
+                <TouchableOpacity>
+                    <Image 
+                    styles={styles.loginItem3}
+                    source={require('../assets/facebook.png')}
+                    resizeMode='contain'
+                    />
                 </TouchableOpacity>
             </View>
         </View>
@@ -49,11 +113,10 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '60%',
         display: 'flex',
-
         alignItens: 'center',
         backgroundColor: 'white',
         marginTop: 350,
-        borderRadius: 50
+        borderRadius: 50,
     },
     textLogin: {
         textAlign: 'center'
@@ -87,9 +150,10 @@ const styles = StyleSheet.create({
     btnView: {
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
+        width: 280,
         justifyContent: 'space-around',
-        marginTop: 30
+        marginTop: 30,
+        marginHorizontal: 55,
     },
     btnLogin: {
         backgroundColor: 'black',
@@ -112,7 +176,15 @@ const styles = StyleSheet.create({
     btnTxt: {
         color: 'white',
         fontSize: 20
-    }
+    },
+    loginItensView:{
+        marginTop: 80,
+        width: '100%',
+        height: '40%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+      },
 })
 
 export default LoginPage
