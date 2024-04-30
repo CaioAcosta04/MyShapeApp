@@ -1,25 +1,9 @@
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native'
-import React, { Component } from 'react'
+import React from 'react'
+import Routes from '../Routes/routes';
 
 const MainPage = (props) => {
-    return (
-    <View style={styles.container}>
-        <Text>MainPage</Text>
-        <TouchableOpacity onPress={props.onClick}>
-            <Text>Voltar</Text>
-        </TouchableOpacity>
-    </View>
-    )
+    console.log('Abriu a Pagina principal!')
+    return (<Routes/>)
   }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
-})
 
 export default MainPage

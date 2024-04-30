@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import LoginPage from './LoginPage';
-import RegusterPage from './RegusterPage';
+import LoginPage from '../Modals/LoginPage';
+import RegusterPage from '../Modals/RegisterPage';
+import { googleSignIn } from '../FirebaseConfig';
 
-const Login = (props) => {
+
+const Login = () => {
     const [LoginState, setLoginState] = useState(false)
     const [registerState, setRegisterState] = useState(false)
 
@@ -23,7 +25,7 @@ const Login = (props) => {
     }
   return (
     <View style={styles.container}>
-        { LoginState && <LoginPage onClose={props.onClick} modalVisible={LoginState}/>}
+        { LoginState && <LoginPage onClose={fecharLoginState} modalVisible={LoginState}/>}
         { registerState && <RegusterPage onClose={fecharRegisterState} modalVisible={registerState}/>}
         
       <View style={styles.backgroundLogin}>
@@ -67,7 +69,9 @@ const Login = (props) => {
               />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              
+            >
                 <Image 
                 styles={styles.loginItem2}
                 source={require('../assets/google.png')}
@@ -123,7 +127,8 @@ const styles = StyleSheet.create({
       height: '30%',
       display: 'flex',
       backgroundColor: 'white',
-      borderRadius: 50,
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
       justifyContent: 'space-between'
     },
     titleOptions: {

@@ -1,58 +1,74 @@
-import { View, Text, StyleSheet, Modal, TouchableOpacity, TextInput, Image } from 'react-native'
-import React from 'react'
+import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput, Image, ActivityIndicator, KeyboardAvoidingView } from 'react-native'
+import React, { useState } from 'react'
+import { FIREBASE_AUTH } from '../FirebaseConfig';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const RegusterPage = (props) => {
+const LoginPage = (props) => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false);
+    const auth = FIREBASE_AUTH;
 
-    //TODO: Implementar função que registra usuário
+    const signIn = async ()=>{
+        setLoading(true);
+        try{
+            const response = await signInWithEmailAndPassword(auth,email,password);
+            console.log('response: ', response);
+            props.onClose
+            setTimeout(()=>{console.log('Delay')}, 1000)
+        }catch (error){
+            console.log(error);
+            alert('Sign In failed: ' + error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
 
   return (
+
     <Modal
         visible={props.modalVisible}
         animationType='slide'
         transparent={true}
     >
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <View style={styles.titleView}>
-                <Text style={styles.titleText}>Faça seu cadastro</Text>
+                <Text style={styles.titleText}>Faça seu login</Text>
             </View>
             <View style={styles.inputsView}>
-                    <TextInput
-                        placeholder='Nome Completo'
-                        style={styles.textInput}
-                    />
-                    <TextInput
-                        placeholder='Email'
-                        style={styles.textInput}
-                    />
-                    <TextInput
-                        placeholder='Data de Nascimento'
-                        style={styles.textInput}
-                    />
-
-                    <View style={styles.senhasView}>
-                        <TextInput
-                            placeholder='Senha'
-                            style={styles.textInputSenha}
-                        />
-                        <TextInput
-                            placeholder='Confirmação'
-                            style={styles.textInputSenha}
-                        />
-                    </View>
+                <TextInput
+                    placeholder='Email'
+                    value={email}
+                    style={styles.textInput}
+                    onChangeText={(text)=>(setEmail(text))}
+                    autoCapitalize='none'
+                />
+                <TextInput
+                    placeholder='Senha'
+                    style={styles.textInput}
+                    onChangeText={(text)=>(setPassword(text))}
+                    autoCapitalize='none'
+                    secureTextEntry
+                />
             </View>
+
             <View style={styles.btnView}>
-                <TouchableOpacity 
-                    onPress={props.onClose}
-                    style={styles.btnLogin}
-                    >
-                    <Text style={styles.btnTxt}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    onPress={props.onClose}
-                    style={styles.back}
-                    >
-                    <Text style={styles.btnTxt}>Voltar</Text>
-                </TouchableOpacity>
+
+                {loading ? <ActivityIndicator size={20} color="#0000ff"/> : <>
+                    <TouchableOpacity 
+                        onPress={signIn}
+                        style={styles.btnLogin}
+                        >
+                        <Text style={styles.btnTxt}>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={props.onClose}
+                        style={styles.back}
+                        >
+                        <Text style={styles.btnTxt}>Voltar</Text>
+                    </TouchableOpacity>
+                </>}
+
             </View>
 
             <View style={styles.loginItensView}>
@@ -80,8 +96,7 @@ const RegusterPage = (props) => {
                     />
                 </TouchableOpacity>
             </View>
-
-        </View>
+        </KeyboardAvoidingView>
     </Modal>
   )
 }
@@ -89,13 +104,12 @@ const RegusterPage = (props) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: '70%',
+        height: '60%',
         display: 'flex',
-        justifyContent: 'center',
         alignItens: 'center',
         backgroundColor: 'white',
-        marginTop: 250,
-        borderRadius: 50
+        marginTop: 350,
+        borderRadius: 50,
     },
     textLogin: {
         textAlign: 'center'
@@ -110,7 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop:20
     },
-
+    
     inputsView:{
         display: 'flex',
         justifyContent: 'center',
@@ -125,6 +139,7 @@ const styles = StyleSheet.create({
         padding:5,
         borderRadius: 10
     },
+
     btnView: {
         display: 'flex',
         flexDirection: 'row',
@@ -132,7 +147,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 30,
         marginHorizontal: 55,
-
     },
     btnLogin: {
         backgroundColor: 'black',
@@ -156,31 +170,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20
     },
-    senhasView: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width:280,
-        alignItems: 'center',
-        marginTop: 30
-    },
-    textInputSenha: {
-        width: 135,
-        height: 50,
-        backgroundColor: '#D9D9D9',
-        fontSize: 18,
-        padding:5,
-        borderRadius: 10
-    },
     loginItensView:{
-        marginTop: 10,
+        marginTop: 40,
         width: '100%',
-        height: '15%',
+        height: '40%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 30
       },
 })
 
-export default RegusterPage
+export default LoginPage
