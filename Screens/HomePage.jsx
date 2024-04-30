@@ -8,17 +8,17 @@ import CreateWorPage from './CreateWorPage'
 
 const HomePage = (props) => {
     const [workout, setWorkout] = useState(false);
-    const [dataWorkout, setDataWorkout] = useState([{id: 0, nome: "Treino de bumbum", quantidade: 50},
-                                                    {id: 1, nome: "Treino de peito", quantidade: 8},
-                                                    {id: 2, nome: "Treino de costas", quantidade: 5},
-                                                    {id: 3, nome: "Treino de tríceps", quantidade: 9},
-                                                    {id: 4, nome: "Treino de cotovelo", quantidade: 13}]);
+    const [dataWorkout, setDataWorkout] = useState([{id: 0, nome: "Treino de Bumbum", quantidade: 50},
+                                                    {id: 1, nome: "Treino de Peito", quantidade: 8},
+                                                    {id: 2, nome: "Treino de Costas", quantidade: 5},
+                                                    {id: 3, nome: "Treino de Tríceps", quantidade: 9},
+                                                    {id: 4, nome: "Treino de Cotovelo", quantidade: 13}]);
 
-    const [originalData, setOriginalData] = useState([{id: 0, nome: "Treino de bumbum", quantidade: 50},
-                                                      {id: 1, nome: "Treino de peito", quantidade: 8},
-                                                      {id: 2, nome: "Treino de costas", quantidade: 5},
-                                                      {id: 3, nome: "Treino de tríceps", quantidade: 9},
-                                                      {id: 4, nome: "Treino de cotovelo", quantidade: 13}])
+    const [originalData, setOriginalData] = useState([{id: 0, nome: "Treino de Bumbum", quantidade: 50},
+                                                      {id: 1, nome: "Treino de Peito", quantidade: 8},
+                                                      {id: 2, nome: "Treino de Costas", quantidade: 5},
+                                                      {id: 3, nome: "Treino de Tríceps", quantidade: 9},
+                                                      {id: 4, nome: "Treino de Cotovelo", quantidade: 13}])
     
     function openWorkout(){
       setWorkout(true)
