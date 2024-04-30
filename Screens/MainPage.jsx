@@ -1,5 +1,5 @@
 import React from 'react'
-import Routes from '../Routes/routes';
+import Routes from '../Routes/tabRoutes';
 
 const MainPage = (props) => {
     console.log('Abriu a Pagina principal!')

@@ -1,17 +1,28 @@
 import { Text, View, StyleSheet, TouchableOpacity, TextInput} from 'react-native'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 
 import { Feather, AntDesign } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MainHeader from '../Components/MainHeader'
+import CreateWorPage from './CreateWorPage'
 
 
-export class HomePage extends Component {
-  render() {
+const HomePage = (props) => {
+    const [workout, setWorkout] = useState(false);
+
+    function openWorkout(){
+      setWorkout(true)
+    }
+
+    function closeWorkout(){
+      setWorkout(false)
+    }
+
     return (
 
       <SafeAreaView style={styles.container}>
         <MainHeader/>
+        {workout && <CreateWorPage onClose={closeWorkout}/>}
         <View style={styles.searchBar}>
           <AntDesign name="search1" size={30} color={'gray'}/>
           <TextInput style={styles.input} placeholder='Buscar treino'/>
@@ -20,14 +31,16 @@ export class HomePage extends Component {
           
         </View>
         <View style={styles.btnAddView}>
-          <TouchableOpacity>
-            <Feather name="plus-circle" size={48} color={'gray'} />
+          <TouchableOpacity
+            onPress={openWorkout}
+          >
+            <Feather name="plus-circle" size={48} color={'gray'}/>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
     )
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {
