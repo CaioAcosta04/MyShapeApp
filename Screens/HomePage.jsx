@@ -6,12 +6,20 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import MainHeader from '../Components/MainHeader'
 import CreateWorPage from './CreateWorPage'
 
-const keyExtractor = ({ id })=> id.toString();
-
-
 const HomePage = (props) => {
     const [workout, setWorkout] = useState(false);
+    const [dataWorkout, setDataWorkout] = useState([{id: 0, nome: "Treino de bumbum", quantidade: 50},
+                                                    {id: 1, nome: "Treino de peito", quantidade: 8},
+                                                    {id: 2, nome: "Treino de costas", quantidade: 5},
+                                                    {id: 3, nome: "Treino de tríceps", quantidade: 9},
+                                                    {id: 4, nome: "Treino de cotovelo", quantidade: 13}]);
 
+    const [originalData, setOriginalData] = useState([{id: 0, nome: "Treino de bumbum", quantidade: 50},
+                                                      {id: 1, nome: "Treino de peito", quantidade: 8},
+                                                      {id: 2, nome: "Treino de costas", quantidade: 5},
+                                                      {id: 3, nome: "Treino de tríceps", quantidade: 9},
+                                                      {id: 4, nome: "Treino de cotovelo", quantidade: 13}])
+    
     function openWorkout(){
       setWorkout(true)
     }
@@ -20,13 +28,10 @@ const HomePage = (props) => {
       setWorkout(false)
     }
 
-    const workoutList = [
-      {id: 0, nome: "Treino de Bumbum", quantidade: 50},
-      {id: 1, nome: "Treino de Peito", quantidade: 8},
-      {id: 2, nome: "Treino de Costas", quantidade: 5},
-      {id: 3, nome: "Treino de Tríceps", quantidade: 9},
-      {id: 4, nome: "Treino de Cotovelo", quantidade: 13}
-    ]
+    function search(text){
+      var array = JSON.parse(JSON.stringify(originalData))
+      setDataWorkout(array.filter((d)=> d.nome.includes(text)))
+    }
 
     return (
 
@@ -36,12 +41,12 @@ const HomePage = (props) => {
 
         <View style={styles.searchBar}>
           <AntDesign name="search1" size={30} color={'gray'}/>
-          <TextInput style={styles.input} placeholder='Buscar treino'/>
+          <TextInput style={styles.input} placeholder='Buscar treino' onChangeText={(text)=> search(text)} autoCapitalize='none'/>
         </View>
 
         <View style={styles.workoutsView}>
           <FlatList 
-            data={workoutList}
+            data={dataWorkout}
             renderItem={({item})=>{
               return(
                 <View style={styles.workoutItemView} key={item.id}>
