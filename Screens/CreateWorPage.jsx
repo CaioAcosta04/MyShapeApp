@@ -2,6 +2,7 @@ import { Modal, Text, View, StyleSheet,TouchableOpacity, TextInput } from 'react
 import React, { Component } from 'react'
 
 import { EvilIcons } from '@expo/vector-icons'
+import WorkoutForm from '../Components/WorkoutForm'
 
 
 const CreateWorPage = (props) => {
@@ -16,9 +17,20 @@ const CreateWorPage = (props) => {
                 <EvilIcons style={styles.iconInput} name="pencil" size={35} color="black" />
               </View>
             </View>
+            
             <View style={styles.workoutView}>
-
+              <View style={styles.containerWorkout}>
+                <View style={styles.formView}>
+                  <WorkoutForm/>
+                </View>
+                <View style={styles.buttonView}>
+                  <TouchableOpacity style={styles.btnAdicionarEx}>
+                      <Text style={styles.txtBtnAdd}>Adicionar Exercício</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
+
             <View style={styles.btnsView}>
               <TouchableOpacity
                   style={styles.btnCriar}
@@ -67,7 +79,6 @@ const styles = StyleSheet.create({
       },
       workoutView: {
         height: '70%',
-        backgroundColor:'blue',
       },
       btnsView:{
         display:'flex',
@@ -94,7 +105,31 @@ const styles = StyleSheet.create({
       },
       btnText: {
         fontSize: 20
-      }
+      },
+      formView: {
+        height: '60%',
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e7e7e7',
+      },
+      buttonView: {
+          display: 'flex',
+          justifyContent:'center',
+          alignItems: 'center',
+          height: '25%',
+      },
+      btnAdicionarEx:{
+          backgroundColor: '#e7e7e7',
+          padding: 15,
+          borderRadius: 20
+      },
+      containerWorkout:{
+        width: 300,
+        height: 350,
+        marginTop: 20,
+        display: 'flex',
+        justifyContent:'center'
+    },
 })
 
 export default CreateWorPage
